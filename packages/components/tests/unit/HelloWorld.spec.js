@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, mount } from "@vue/test-utils";
 import HelloWorld from "@/components/HelloWorld.vue";
 
 describe("HelloWorld.vue", () => {
@@ -8,5 +8,13 @@ describe("HelloWorld.vue", () => {
       props: { msg },
     });
     expect(wrapper.text()).toMatch(msg);
+  });
+
+  it("is stable", () => {
+    const msg = "Component is stable";
+    const wrapper = mount(HelloWorld, {
+      props: { msg },
+    });
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
