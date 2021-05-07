@@ -1,9 +1,5 @@
-# my-vue-monorepo
-
-## Workspaces info
-yarn workspaces info
+# my-vue-monorepo/packages
 
 ## How to create a vue app
 cd packages
 vue create hello-world-app
-  

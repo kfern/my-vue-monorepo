@@ -1,0 +1,27 @@
+{
+  "name": "@kfern/my-vue-monorepo",
+  "version": "0.0.1",
+  "description": "",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "refresh": "lerna bootstrap",
+    "test": "echo \"@todo: testing\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kfern/my-vue-monorepo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kfern/my-vue-monorepo/issues"
+  },
+  "homepage": "https://github.com/kfern/my-vue-monorepo#readme",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
