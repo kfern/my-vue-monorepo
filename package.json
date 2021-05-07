@@ -7,8 +7,9 @@
     "packages/*"
   ],
   "scripts": {
-    "refresh": "lerna bootstrap",
-    "test": "echo \"@todo: testing\" && exit 1"
+    "refresh": "lerna clean --yes & lerna bootstrap",
+    "test": "yarn test:unit",
+    "test:unit": "lerna run test:unit --stream"
   },
   "repository": {
     "type": "git",
