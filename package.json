@@ -9,7 +9,9 @@
   "scripts": {
     "refresh": "lerna clean --yes & lerna bootstrap",
     "test": "yarn test:unit",
-    "test:unit": "lerna run test:unit --stream"
+    "test:unit": "lerna run test:unit --stream",
+    "sb": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,14 @@
   },
   "homepage": "https://github.com/kfern/my-vue-monorepo#readme",
   "devDependencies": {
-    "lerna": "^4.0.0"
-  }
+    "@babel/core": "^7.14.0",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/vue3": "^6.2.9",
+    "babel-loader": "^8.2.2",
+    "lerna": "^4.0.0",
+    "vue-loader": "^16.2.0"
+  },
+  "dependencies": {}
 }
