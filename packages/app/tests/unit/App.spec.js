@@ -1,9 +1,9 @@
-import { mount } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import App from "@/App.vue";
 
 describe("App.vue", () => {
   it("is stable", () => {
-    const wrapper = mount(App);
+    const wrapper = shallowMount(App);
     expect(wrapper.html()).toMatchSnapshot();
   });
 });
