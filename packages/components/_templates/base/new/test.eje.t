@@ -13,7 +13,8 @@ describe("<%= h.changeCase.pascalCase(name) %>.vue", () => {
     expect(wrapper.text()).toMatch(msg);
   });
 
-  it("is stable", () => {
+  // Change xit by it when stable
+  xit("is stable", () => {
     const msg = "<%= h.changeCase.pascalCase(name) %> is stable";
     const wrapper = mount(<%= h.changeCase.pascalCase(name) %>, {
       props: { msg },
