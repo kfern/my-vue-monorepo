@@ -11,7 +11,8 @@
     "test": "yarn test:unit",
     "test:unit": "lerna run test:unit --stream",
     "sb": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "new": "lerna --scope @kfern/components exec -- yarn new"
   },
   "repository": {
     "type": "git",
