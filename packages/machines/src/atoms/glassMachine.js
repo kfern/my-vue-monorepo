@@ -7,7 +7,7 @@ const addWater = assign({
 
 // Guard to check if the glass is full
 function glassIsFull(context, event) {
-  return context.amount >= 10;
+  return context.amount >= context.limit;
 }
 
 export const glassMachine = createMachine(
@@ -15,7 +15,8 @@ export const glassMachine = createMachine(
     id: 'glass',
     // the initial context (extended state) of the statechart
     context: {
-      amount: 0
+      amount: 0,
+      limit: 10
     },
     initial: 'empty',
     states: {

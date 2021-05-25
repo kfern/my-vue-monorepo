@@ -13,22 +13,19 @@ describe('glassMachine', () => {
       type: 'FILL'
     });
     expect(actualState.value).toBe(expectedState);
-    expect(actualState.context).toStrictEqual({ amount: 1});
+    expect(actualState.context.amount).toBe(1);
   });
 
-  it('should reach "full" given "empty" when the "FILL" event occurs multiple times', () => {
-    const limit = 10;
+  it('should reach "full" given "filling" when amount is in the limit', () => {
+    const limit = 20;
     const expectedState = 'full'; // the expected state value
-    let actualState = glassMachine.transition(glassMachine.initialState, {
-      type: 'FILL'
-    });
-    for (let index = 0; index < limit + 3; index++) {// More times than limit
-      actualState = glassMachine.transition(actualState, {
-        type: 'FILL'
-      });      
-    }
+    const testMachine = glassMachine.withContext({amount: limit - 1, limit});
+
+    let actualState = testMachine.transition('filling', { type: 'FILL' });
+    actualState = testMachine.transition(actualState, { type: 'FILL' });
+
     expect(actualState.value).toBe(expectedState);
-    expect(actualState.context).toStrictEqual({ amount: limit});
+    expect(actualState.context.amount).toBe(limit);
   });
   
 });
