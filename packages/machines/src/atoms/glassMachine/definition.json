@@ -1,0 +1,31 @@
+{
+  "id": "glass",
+  "context": {
+    "amount": 0,
+    "limit": 10
+  },
+  "initial": "empty",
+  "states": {
+    "empty": {
+      "on": {
+        "FILL": {
+          "target": "filling",
+          "actions": "addWater"
+        }
+      }
+    },
+    "filling": {
+      "always": {
+        "target": "full",
+        "cond": "glassIsFull"
+      },
+      "on": {
+        "FILL": {
+          "target": "filling",
+          "actions": "addWater"
+        }
+      }
+    },
+    "full": {}
+  }
+}
