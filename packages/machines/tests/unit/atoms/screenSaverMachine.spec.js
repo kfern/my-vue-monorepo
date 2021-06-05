@@ -1,7 +1,7 @@
 // https://codesandbox.io/s/3qlmw4m4rq?file=/src/machine.test.js
 import { interpret } from "xstate";
 import { SimulatedClock } from 'xstate/lib/SimulatedClock'; // >= 4.6.0
-import { screenSaverMachine } from '../../../src/atoms/screenSaverMachine'
+import { screenSaverMachine } from '../../../src/atoms/screenSaverMachine';
 
 describe("ScreenSaver machine", () => {
   let service;
