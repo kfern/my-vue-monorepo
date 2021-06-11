@@ -1,9 +1,21 @@
 # my-vue-monorepo
 
-## Workspaces info
-
+## Project setup
 ```
-yarn workspaces info
+yarn install
+```
+## Storybook with hot reload
+```
+yarn sb
+```
+## Tests
+```
+yarn test:unit
+```
+## How to create a new component
+```
+yarn new
+
 ```
 ## How to create a vue app
 
