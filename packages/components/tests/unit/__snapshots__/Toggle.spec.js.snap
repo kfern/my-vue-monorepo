@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toggle.vue is stable 1`] = `<button>Click to activate</button>`;
+exports[`Toggle.vue is stable 1`] = `<button>Button text when inactive</button>`;
