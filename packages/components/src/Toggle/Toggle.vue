@@ -11,7 +11,8 @@
 
 <script>
 
-import { useMachine } from '@xstate/vue';
+// import { useMachine } from '@xstate/vue'; // With this syntax jest throw an error
+const { useMachine } = require('@xstate/vue');
 import { createMachine } from 'xstate';
 
 // This machine is completely decoupled from Vue
