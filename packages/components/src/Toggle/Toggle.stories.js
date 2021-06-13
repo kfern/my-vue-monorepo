@@ -1,13 +1,13 @@
-import Toggle from './Toggle.vue';
+import Toggle from "./Toggle.vue";
 
 export default {
-  title: 'components/Toggle',
+  title: "components/Toggle",
   component: Toggle,
   argTypes: {
     msg: {
       active: String,
-      inactive: String
-    }
+      inactive: String,
+    },
   },
 };
 
@@ -25,8 +25,8 @@ const Template = (args) => ({
 export const Example = Template.bind({});
 
 Example.args = {
-  msg : {
-    inactive: 'Click to activate',
-    active: 'Active! Click to deactivate'
-  }
+  msg: {
+    inactive: "Click to activate",
+    active: "Active! Click to deactivate",
+  },
 };

@@ -1,10 +1,10 @@
-import HelloWorld from './HelloWorld.vue';
+import HelloWorld from "./HelloWorld.vue";
 
 export default {
-  title: 'components/HelloWorld',
+  title: "components/HelloWorld",
   component: HelloWorld,
   argTypes: {
-    msg: 'HelloWorld Story'
+    msg: "HelloWorld Story",
   },
 };
 
@@ -21,5 +21,5 @@ const Template = (args) => ({
 
 export const Example = Template.bind({});
 Example.args = {
-  msg: 'Hello StoryBook World'
+  msg: "Hello StoryBook World",
 };

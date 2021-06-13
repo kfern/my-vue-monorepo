@@ -2,10 +2,10 @@ import { mount } from "@cypress/vue";
 import Toggle from "@/Toggle/Toggle.vue";
 
 const testProps = {
-  msg : {
+  msg: {
     inactive: "Button text when inactive",
-    active: "Button text when active"
-  }
+    active: "Button text when active",
+  },
 };
 
 describe("Toggle.vue", () => {
@@ -21,7 +21,7 @@ describe("Toggle.vue", () => {
     cy.get("button").contains(testProps.msg.inactive);
   });
 
-  it("renders active msg When inactive and click", async () => {
+  it("renders active msg When inactive and click", () => {
     // Arrange
     mount(Toggle, {
       props: testProps,
@@ -35,7 +35,7 @@ describe("Toggle.vue", () => {
     cy.get("button").contains(testProps.msg.active);
   });
 
-  it("renders inactive msg When active and click", async () => {
+  it("renders inactive msg When active and click", () => {
     mount(Toggle, {
       props: testProps,
     });
@@ -46,7 +46,6 @@ describe("Toggle.vue", () => {
     cy.get("button").click();
 
     // Assert
-    cy.get("button").contains(testProps.msg.inactive)
-  });  
-
+    cy.get("button").contains(testProps.msg.inactive);
+  });
 });
