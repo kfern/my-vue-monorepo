@@ -10,7 +10,7 @@ describe("<%= h.changeCase.pascalCase(name) %>.vue", () => {
     const testProps = {
       msg: "new message",
     };
-    mount(HelloWorld, {
+    mount(<%= h.changeCase.pascalCase(name) %>, {
       props: testProps,
     });
 
