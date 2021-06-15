@@ -19,6 +19,10 @@ yarn build
 ```
 yarn test:unit
 ```
+### Run interactive unit tests
+```
+yarn test:interactive
+```
 
 ### Lints and fixes files
 ```

@@ -8,9 +8,13 @@ yarn install
 ```
 yarn sb
 ```
-## Tests
+## Unit tests 
 ```
 yarn test:unit
+```
+## Interactive unit tests 
+```
+yarn test:interactive
 ```
 ## How to create a new component
 ```
