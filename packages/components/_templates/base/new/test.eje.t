@@ -1,24 +1,22 @@
 ---
-to: tests/unit/<%= h.changeCase.pascalCase(name) %>.spec.js
+to: src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.spec.js
 ---
-import { shallowMount, mount } from "@vue/test-utils";
+import { mount } from "@cypress/vue";
 import <%= h.changeCase.pascalCase(name) %> from "@/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.vue";
 
 describe("<%= h.changeCase.pascalCase(name) %>.vue", () => {
   it("renders props.msg when passed", () => {
-    const msg = "new message";
-    const wrapper = shallowMount(<%= h.changeCase.pascalCase(name) %>, {
-      props: { msg },
+    // Arrange
+    const testProps = {
+      msg: "new message",
+    };
+    mount(HelloWorld, {
+      props: testProps,
     });
-    expect(wrapper.text()).toMatch(msg);
-  });
 
-  // Change xit by it when stable
-  xit("is stable", () => {
-    const msg = "<%= h.changeCase.pascalCase(name) %> is stable";
-    const wrapper = mount(<%= h.changeCase.pascalCase(name) %>, {
-      props: { msg },
-    });
-    expect(wrapper.html()).toMatchSnapshot();
+    // Act: Nothing
+
+    // Assert
+    cy.get(".<%= h.changeCase.pascalCase(name) %>").contains(testProps.msg);
   });
 });

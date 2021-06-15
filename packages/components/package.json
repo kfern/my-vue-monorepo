@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "cypress run-ct",
+    "test:unit": "npm run lint && cypress run-ct",
+    "test:interactive": "cypress open-ct",
     "lint": "vue-cli-service lint",
     "new": "hygen base new"
   },
