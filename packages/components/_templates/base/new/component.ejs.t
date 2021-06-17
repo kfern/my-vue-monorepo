@@ -1,5 +1,6 @@
 ---
 to: src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.vue
+sh: cd <%= cwd %> && yarn lint
 ---
 <template>
   <div class="<%= h.changeCase.pascalCase(name) %>">
