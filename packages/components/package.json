@@ -9,8 +9,7 @@
     "test:unit": "npm run lint && cypress run-ct",
     "test:interactive": "cypress open-ct",
     "lint": "vue-cli-service lint",
-    "new": "hygen base new",
-    "test:new": "npm run new TestComponent && npm run test:unit"
+    "new": "hygen base new"
   },
   "dependencies": {
     "@xstate/vue": "^0.5.0",
