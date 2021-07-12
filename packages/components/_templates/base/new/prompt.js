@@ -8,7 +8,7 @@ module.exports = {
     const questions = [{
       type: "input",
       name: "name",
-      initial: args.name,
+      initial: args.name ? args.name : 'test',
       message: "What's name of the component? (ex: test)",
     },
     {
@@ -16,6 +16,7 @@ module.exports = {
       name: "statesNames",
       initial: "inactive, active",
       message: "States names? (separated by comma)",
+      result: (states) => states.map(s => s.toLowerCase())
     }]
 
     return inquirer
@@ -27,8 +28,9 @@ module.exports = {
           questions.push({
             type: "list",
             name: state + ".on",
-            initial:  "CLICK",
-            message: `Events names for ${state}? (separated by comma: "CLICK, CLOSE")`,
+            initial: "CLICK",
+            message: `Events names for ${state} state? (separated by comma: "CLICK, CLOSE")`,
+            result: (events) => events.map(e => e.toUpperCase())
           })
         })
         return inquirer
@@ -36,6 +38,7 @@ module.exports = {
           .then(dataStep1 => Object.assign({}, answers, dataStep1))
           .then(dataStep2 => {
             const questions = []
+            const transitions = []
             dataStep2.statesNames.forEach(state => {
               dataStep2[state].on.forEach(event => {
                 questions.push({
@@ -43,12 +46,16 @@ module.exports = {
                   choices: [...dataStep2.statesNames.filter(s => s !== state), "final"],
                   name: `${state}.on.${event}.target`,
                   message: `Select next state when "${state}" and "${event}"`,
-                })  
+                  result: (newState) => {
+                    transitions.push({ state, event, target: newState })
+                    return newState
+                  }
+                })
               })
             })
             return inquirer
               .prompt(questions)
-              .then(dataStep3 => Object.assign({}, dataStep2, dataStep3))
+              .then(dataStep3 => Object.assign({}, dataStep2, dataStep3, { transitions }))
           })
           .then(final => {
             const states = {}
@@ -56,15 +63,21 @@ module.exports = {
               const element = final.statesNames[index];
               states[element] = final[element]
             }
+            const eventsNames = final.transitions.map(t => t.event).filter((value, index, self) => self.indexOf(value) === index)
+
             const result = {
-              name: final.name, 
+              name: final.name,
               machine: {
                 id: `${final.name.toLowerCase()}Machine`,
                 initial: final.statesNames[0],
                 context: {},
                 states
-              }
-            }
+              },
+              transitions: final.transitions,
+              statesNames,
+              eventsNames
+            };
+            console.log(result)
             return result
           })
       })

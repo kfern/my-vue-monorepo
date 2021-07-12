@@ -1,33 +1,49 @@
 ---
 to: src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.vue
-sh: cd <%= cwd %> && yarn lint
+sh: cd <%= cwd %> && yarn lint src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.vue
 ---
+<!-- <%= h.changeCase.pascalCase(name) %>.vue -->
+
 <template>
-  <div class="<%= h.changeCase.pascalCase(name) %>">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
+  <% for(const t of transitions) {%>
+  <div v-if="state.value === '<%= t.state %>'" :class="`${state.value}-screen`">
+    <button class="click-button" @click="send('<%= t.event %>')">
+      {{ <%= t.state %> }}
+    </button>
   </div>
+  <% } %>
 </template>
 
 <script>
+
+// Jest throw an error when import. It works with require
+// import { useMachine } from '@xstate/vue'; 
+
+const { useMachine } = require("@xstate/vue");
+import { createMachine } from "xstate";
+import machine from "./<%= h.changeCase.pascalCase(name) %>.machine.json";
+
 export default {
   name: "<%= h.changeCase.pascalCase(name) %>",
   props: {
-    msg: String,
+    <% for(const state of statesNames) {%> <%= state %>: String,<% } %>
+  },
+  setup() {
+    const { state, send } = useMachine(createMachine(machine));
+    return {
+      state,
+      send,
+    };
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1 {
-  margin: 40px 0 0;
-}
-a {
-  color: #42b983;
-}
+<% for(const state of statesNames) {%> .<%= state %>-screen {
+  width: 90%
+}<% } %>
+<% for(const event of eventsNames) {%> .<%= h.changeCase.lower(event) %>-button {
+  width: 20%
+}<% } %>
 </style>

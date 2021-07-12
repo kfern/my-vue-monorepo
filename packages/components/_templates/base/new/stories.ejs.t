@@ -1,5 +1,7 @@
 ---
 to: src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.stories.js
+sh: cd <%= cwd %> && yarn lint src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.stories.js
+
 ---
 import <%= h.changeCase.pascalCase(name) %> from "./<%= h.changeCase.pascalCase(name) %>.vue";
 
@@ -7,7 +9,7 @@ export default {
   title: "components/<%= h.changeCase.pascalCase(name) %>",
   component: <%= h.changeCase.pascalCase(name) %>,
   argTypes: {
-    msg: "<%= h.changeCase.pascalCase(name) %> Story",
+    <% for(const state of statesNames) {%> <%= state %>: String,<% } %>
   },
 };
 
@@ -24,5 +26,5 @@ const Template = (args) => ({
 
 export const Example = Template.bind({});
 Example.args = {
-  msg: "Hello StoryBook World",
+  <% for(const state of statesNames) {%> <%= state %>: "Text when <%= state %> state",<% } %>
 };
