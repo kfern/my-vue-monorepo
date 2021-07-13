@@ -58,11 +58,14 @@ module.exports = {
               .then(dataStep3 => Object.assign({}, dataStep2, dataStep3, { transitions }))
           })
           .then(final => {
-            const states = {}
+            let states = {}
             for (let index = 0; index < final.statesNames.length; index++) {
               const element = final.statesNames[index];
               states[element] = final[element]
             }
+            // @todo better?
+            states = JSON.parse(JSON.stringify(states).replace(/"target":"final"/gm, '"type":"final"'));
+
             const eventsNames = final.transitions.map(t => t.event).filter((value, index, self) => self.indexOf(value) === index)
 
             const transitions = final.statesNames.map(state => {
