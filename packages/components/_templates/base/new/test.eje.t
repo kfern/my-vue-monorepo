@@ -5,10 +5,6 @@ sh: cd <%= cwd %> && yarn lint src/<%= h.changeCase.pascalCase(name) %>/<%= h.ch
 import { mount } from "@cypress/vue";
 import <%= h.changeCase.pascalCase(name) %> from "@/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.vue";
 
-/*
-import machine from "@/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.machine.json";
-import { getTestsModels } from "../lib/test-utils";
-
 const testSelectors = {
   states: {<% for(const state of statesNames) {%> 
     <%= state %>: ".<%= state %>-screen",<% } %>
@@ -18,6 +14,10 @@ const testSelectors = {
   }
 };
 
+/*
+import machine from "@/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.machine.json";
+import { getTestsModels } from "../lib/test-utils";
+
 const checkState = {
   <% for(const state of statesNames) {%><%= state %>: (cy) => {
     cy.get(testSelectors.states.<%= state %>);
@@ -26,7 +26,7 @@ const checkState = {
 
 const triggerEvents = {
   <% for(const event of eventsNames) {%><%= h.changeCase.lower(event) %>: (cy) => {
-    cy.get(testSelectors.events.<%= h.changeCase.lower(event) %>).click();
+    cy.get(testSelectors.events.<%= event %>).click();
   },<% } %>
 };
 
@@ -52,26 +52,25 @@ describe("<%= h.changeCase.pascalCase(name) %>.vue", () => {
     // Act: Nothing
 
     // Assert
-    cy.get("button").contains(testProps.<%= statesNames[0] %>);
+    cy.get(testSelectors.states.<%= statesNames[0] %>).contains(testProps.<%= statesNames[0] %>);
   });
 
-  /*
-  const transitions = [<% for(const t of transitions) {%>
-    <%- JSON.stringify(t) %>,<% } %>
-  ];
-  */
-  <% for(const t of transitions) {%>
+  <% for(const n of transitions) {%>
+    <% for(const t of n.events) {%>
   it("renders '<%= t.target %>' screen When '<%= t.state %>' and '<%= t.event %>'", () => {
     // Arrange: 
     // @todo: Go to <%= t.state %> state before check
-    cy.get("button").contains(testProps.<%= t.state %>); // Check
+    cy.get(testSelectors.states.<%= t.state %>).contains(testProps.<%= t.state %>); // Check
 
     // Act: Next state
-    cy.get("button").click();
+    cy.get(testSelectors.events.<%= t.event %>).click();
 
     // Assert
-    cy.get("button").contains(testProps.<%= t.target %>);
+    cy.get(testSelectors.states.<%= t.target %>).contains(testProps.<%= t.target %>); // Check
   });
-  
+
+    <% } %>        
   <% } %>
+
+
 });

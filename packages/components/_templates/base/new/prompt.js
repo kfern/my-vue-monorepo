@@ -65,6 +65,10 @@ module.exports = {
             }
             const eventsNames = final.transitions.map(t => t.event).filter((value, index, self) => self.indexOf(value) === index)
 
+            const transitions = final.statesNames.map(state => {
+              return {state, events: final.transitions.filter(t => t.state === state)}
+            })
+            
             const result = {
               name: final.name,
               machine: {
@@ -73,11 +77,10 @@ module.exports = {
                 context: {},
                 states
               },
-              transitions: final.transitions,
+              transitions,
               statesNames,
               eventsNames
             };
-            console.log(result)
             return result
           })
       })

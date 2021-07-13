@@ -6,13 +6,14 @@ sh: cd <%= cwd %> && yarn lint src/<%= h.changeCase.pascalCase(name) %>/<%= h.ch
 
 <template>
   <div v-bind:data-state="state.value" class="<%= h.changeCase.lower(name) %>-component">
-    <% for(const t of transitions) {%><div v-if="state.value === '<%= t.state %>'" :class="`${state.value}-screen`">
-      <button class="click-button" @click="send('<%= t.event %>')">
-        {{ <%= t.state %> }}
-      </button>
-    </div>
-    <% } %>
-    </div>
+    <% for(const n of transitions) {%>
+    <div v-if="state.value === '<%= n.state %>'" :class="`${state.value}-screen`">  
+      <p>{{ <%= n.state %> }}</p><% for(const e of n.events) {%>
+      <button class="click-button" @click="send('<%= e.event %>')">
+        <%= e.state %> + <%= e.event %> -> <%= e.target %>
+      </button><% } %>        
+    </div><% } %>
+  </div>
 </template>
 
 <script>
