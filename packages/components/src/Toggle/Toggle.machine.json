@@ -1,0 +1,21 @@
+{
+	"id": "toggleMachine",
+	"initial": "inactive",
+	"context": {},
+	"states": {
+		"inactive": {
+			"on": {
+				"CLICK": {
+					"target": "active"
+				}
+			}
+		},
+		"active": {
+			"on": {
+				"CLICK": {
+					"target": "inactive"
+				}
+			}
+		}
+	}
+}

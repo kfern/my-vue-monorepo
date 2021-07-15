@@ -4,10 +4,8 @@ export default {
   title: "components/Toggle",
   component: Toggle,
   argTypes: {
-    msg: {
-      active: String,
-      inactive: String,
-    },
+    inactive: String,
+    active: String,
   },
 };
 
@@ -23,10 +21,7 @@ const Template = (args) => ({
 });
 
 export const Example = Template.bind({});
-
 Example.args = {
-  msg: {
-    inactive: "Click to activate",
-    active: "Active! Click to deactivate",
-  },
+  inactive: "Text when inactive state",
+  active: "Text when active state",
 };

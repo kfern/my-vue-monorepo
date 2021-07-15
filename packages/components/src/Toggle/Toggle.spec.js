@@ -1,51 +1,79 @@
 import { mount } from "@cypress/vue";
 import Toggle from "@/Toggle/Toggle.vue";
 
-const testProps = {
-  msg: {
-    inactive: "Button text when inactive",
-    active: "Button text when active",
+const testSelectors = {
+  states: {
+    inactive: ".inactive-screen",
+    active: ".active-screen",
+  },
+  events: {
+    CLICK: ".click-button",
   },
 };
 
+/*
+import machine from "@/Toggle/Toggle.machine.json";
+import { getTestsModels } from "../lib/test-utils";
+
+const checkState = {
+  inactive: (cy) => {
+    cy.get(testSelectors.states.inactive);
+  },active: (cy) => {
+    cy.get(testSelectors.states.active);
+  },
+};
+
+const triggerEvents = {
+  click: (cy) => {
+    cy.get(testSelectors.events.CLICK).click();
+  },
+};
+
+const testModel = getTestsModels(machine, checkState, triggerEvents);
+const testPlans = testModel.getSimplePathPlans(); // getShortestPathPlans();
+*/
+
 describe("Toggle.vue", () => {
-  it("renders inactive msg by default", () => {
+  const testProps = {
+    inactive: "Text when inactive",
+    active: "Text when active",
+  };
+
+  beforeEach(() => {
     // Arrange
     mount(Toggle, {
       props: testProps,
     });
+  });
 
+  it("renders inactive screen by default", () => {
     // Act: Nothing
 
     // Assert
-    cy.get("button").contains(testProps.msg.inactive);
+    cy.get(testSelectors.states.inactive).contains(testProps.inactive);
   });
 
-  it("renders active msg When inactive and click", () => {
-    // Arrange
-    mount(Toggle, {
-      props: testProps,
-    });
-    cy.get("button").contains(testProps.msg.inactive);
+  it("renders 'active' screen When 'inactive' and 'CLICK'", () => {
+    // Arrange:
+    // @todo: Go to inactive state before check
+    cy.get(testSelectors.states.inactive).contains(testProps.inactive); // Check
 
-    // Act
-    cy.get("button").click();
+    // Act: Next state
+    cy.get(testSelectors.events.CLICK).click();
 
     // Assert
-    cy.get("button").contains(testProps.msg.active);
+    cy.get(testSelectors.states.active).contains(testProps.active); // Check
   });
 
-  it("renders inactive msg When active and click", () => {
-    mount(Toggle, {
-      props: testProps,
-    });
-    cy.get("button").click(); // Go to active
-    cy.get("button").contains(testProps.msg.active); // Check
+  it("renders 'inactive' screen When 'active' and 'CLICK'", () => {
+    // Arrange:
+    // @todo: Go to active state before check
+    cy.get(testSelectors.states.active).contains(testProps.active); // Check
 
-    // Act. Go to inactive
-    cy.get("button").click();
+    // Act: Next state
+    cy.get(testSelectors.events.CLICK).click();
 
     // Assert
-    cy.get("button").contains(testProps.msg.inactive);
+    cy.get(testSelectors.states.inactive).contains(testProps.inactive); // Check
   });
 });

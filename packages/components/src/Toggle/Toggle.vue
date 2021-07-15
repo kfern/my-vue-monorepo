@@ -1,42 +1,38 @@
 <!-- Toggle.vue -->
+
 <template>
-  <button @click="send('TOGGLE')">
-    {{ msg[state.value] }}
-  </button>
+  <div v-bind:data-state="state.value" class="toggle-component">
+    <div v-if="state.value === 'inactive'" :class="`${state.value}-screen`">
+      <p>{{ inactive }}</p>
+      <button class="click-button" @click="send('CLICK')">
+        inactive + CLICK -> active
+      </button>
+    </div>
+    <div v-if="state.value === 'active'" :class="`${state.value}-screen`">
+      <p>{{ active }}</p>
+      <button class="click-button" @click="send('CLICK')">
+        active + CLICK -> inactive
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
-// import { useMachine } from '@xstate/vue'; // With this syntax jest throw an error
+// Jest throw an error when import. It works with require
+// import { useMachine } from '@xstate/vue';
+
 const { useMachine } = require("@xstate/vue");
 import { createMachine } from "xstate";
-
-// This machine is completely decoupled from Vue
-const toggleMachine = createMachine({
-  id: "toggle",
-  context: {
-    /* some data */
-  },
-  initial: "inactive",
-  states: {
-    inactive: {
-      on: { TOGGLE: "active" },
-    },
-    active: {
-      on: { TOGGLE: "inactive" },
-    },
-  },
-});
+import machine from "./Toggle.machine.json";
 
 export default {
-  name: "Toogle",
+  name: "Toggle",
   props: {
-    msg: {
-      active: String,
-      inactive: String,
-    },
+    inactive: String,
+    active: String,
   },
   setup() {
-    const { state, send } = useMachine(toggleMachine);
+    const { state, send } = useMachine(createMachine(machine));
     return {
       state,
       send,
@@ -44,3 +40,17 @@ export default {
   },
 };
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.inactive-screen {
+  width: 90%;
+}
+.active-screen {
+  width: 90%;
+}
+.click-button {
+  width: 20%;
+  margin: 1em;
+}
+</style>
