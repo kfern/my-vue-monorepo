@@ -43,9 +43,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 <% for(const state of statesNames) {%> .<%= state %>-screen {
-  width: 90%
+  width: 90%;
 }<% } %>
 <% for(const event of eventsNames) {%> .<%= h.changeCase.lower(event) %>-button {
-  width: 20%
+  width: 20%;
+  margin: 1em;
 }<% } %>
 </style>
