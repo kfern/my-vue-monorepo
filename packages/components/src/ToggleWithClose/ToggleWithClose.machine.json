@@ -1,0 +1,31 @@
+{
+	"id": "toggle-with-closeMachine",
+	"initial": "inactive",
+	"context": {},
+	"states": {
+		"inactive": {
+			"on": {
+				"CLICK": {
+					"target": "active"
+				}
+			}
+		},
+		"active": {
+			"on": {
+				"CLICK": {
+					"target": "inactive"
+				},
+				"CLOSE": {
+					"target": "closed"
+				}
+			}
+		},
+		"closed": {
+			"on": {
+				"OPEN": {
+					"target": "active"
+				}
+			}
+		}
+	}
+}
