@@ -55,7 +55,6 @@ describe("Toggle.vue", () => {
 
   it("renders 'active' screen When 'inactive' and 'CLICK'", () => {
     // Arrange:
-    // @todo: Go to inactive state before check
     cy.get(testSelectors.states.inactive).contains(testProps.inactive); // Check
 
     // Act: Next state
@@ -67,7 +66,7 @@ describe("Toggle.vue", () => {
 
   it("renders 'inactive' screen When 'active' and 'CLICK'", () => {
     // Arrange:
-    // @todo: Go to active state before check
+    cy.get(testSelectors.events.CLICK).click();
     cy.get(testSelectors.states.active).contains(testProps.active); // Check
 
     // Act: Next state
