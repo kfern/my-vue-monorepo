@@ -9,7 +9,7 @@ sh: cd <%= cwd %> && yarn lint src/<%= h.changeCase.pascalCase(name) %>/<%= h.ch
     <% for(const n of transitions) {%>
     <div v-if="state.value === '<%= n.state %>'" :class="`${state.value}-screen`">  
       <p>{{ <%= n.state %> }}</p><% for(const e of n.events) {%>
-      <button class="click-button" @click="send('<%= e.event %>')">
+      <button class="<%= h.changeCase.lower(e.event) %>-button" @click="send('<%= e.event %>')">
         <%= e.state %> + <%= e.event %> -> <%= e.target %>
       </button><% } %>        
     </div><% } %>
