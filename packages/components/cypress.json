@@ -3,6 +3,7 @@
   "screenshotOnRunFailure": false,
   "component": {
     "testFiles": "**/*.spec.js",
-    "componentFolder": "src"
+    "componentFolder": "src",
+    "defaultCommandTimeout": 2000
   }
 }
