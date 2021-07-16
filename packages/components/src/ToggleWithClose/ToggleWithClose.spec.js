@@ -1,11 +1,30 @@
+import { getTestsModels } from "../lib/test-utils";
 import { mount } from "@cypress/vue";
 import ToggleWithClose from "@/ToggleWithClose/ToggleWithClose.vue";
+import machineJSON from "@/ToggleWithClose/ToggleWithClose.machine.json";
+
+const now = new Date().toLocaleString();
+
+const testProps = {
+  inactive: "Text when inactive " + now,
+  active: "Text when active " + now,
+  closed: "Text when closed " + now,
+};
 
 const testSelectors = {
   states: {
-    inactive: ".inactive-screen",
-    active: ".active-screen",
-    closed: ".closed-screen",
+    inactive: {
+      class: ".inactive-screen",
+      value: testProps.inactive,
+    },
+    active: {
+      class: ".active-screen",
+      value: testProps.active,
+    },
+    closed: {
+      class: ".closed-screen",
+      value: testProps.closed,
+    },
   },
   events: {
     CLICK: ".click-button",
@@ -14,101 +33,64 @@ const testSelectors = {
   },
 };
 
-/*
-import machine from "@/ToggleWithClose/ToggleWithClose.machine.json";
-import { getTestsModels } from "../lib/test-utils";
+const triggerEvents = {
+  CLICK: {
+    exec: ({ cy, selectors }) => {
+      cy.get(selectors.events.CLICK).click();
+    },
+  },
+  CLOSE: {
+    exec: ({ cy, selectors }) => {
+      cy.get(selectors.events.CLOSE).click();
+    },
+  },
+  OPEN: {
+    exec: ({ cy, selectors }) => {
+      cy.get(selectors.events.OPEN).click();
+    },
+  },
+};
 
 const checkState = {
-  inactive: (cy) => {
-    cy.get(testSelectors.states.inactive);
-  },active: (cy) => {
-    cy.get(testSelectors.states.active);
-  },closed: (cy) => {
-    cy.get(testSelectors.states.closed);
+  inactive: ({ cy, selectors }) => {
+    cy.get(selectors.states.inactive.class).contains(
+      selectors.states.inactive.value
+    );
+  },
+  active: ({ cy, selectors }) => {
+    cy.get(selectors.states.active.class).contains(
+      selectors.states.active.value
+    );
+  },
+  closed: ({ cy, selectors }) => {
+    cy.get(selectors.states.closed.class).contains(
+      selectors.states.closed.value
+    );
   },
 };
 
-const triggerEvents = {
-  click: (cy) => {
-    cy.get(testSelectors.events.CLICK).click();
-  },close: (cy) => {
-    cy.get(testSelectors.events.CLOSE).click();
-  },open: (cy) => {
-    cy.get(testSelectors.events.OPEN).click();
-  },
-};
+const testModel = getTestsModels(machineJSON, checkState, triggerEvents);
 
-const testModel = getTestsModels(machine, checkState, triggerEvents);
-const testPlans = testModel.getSimplePathPlans(); // getShortestPathPlans();
-*/
+describe("ToggleWithClose", () => {
+  const testPlans = testModel.getShortestPathPlans();
 
-describe("ToggleWithClose.vue", () => {
-  const testProps = {
-    inactive: "Text when inactive",
-    active: "Text when active",
-    closed: "Text when closed",
-  };
-
-  beforeEach(() => {
-    // Arrange
-    mount(ToggleWithClose, {
-      props: testProps,
+  testPlans.forEach((plan) => {
+    describe(plan.description, () => {
+      plan.paths.forEach((path) => {
+        it(path.description, () => {
+          // do any setup, then...
+          mount(ToggleWithClose, {
+            props: testProps,
+          });
+          cy.waitUntil(() => path.test({ cy, selectors: testSelectors }));
+        });
+      });
     });
   });
 
-  it("renders inactive screen by default", () => {
-    // Act: Nothing
-
-    // Assert
-    cy.get(testSelectors.states.inactive).contains(testProps.inactive);
-  });
-
-  it("renders 'active' screen When 'inactive' and 'CLICK'", () => {
-    // Arrange:
-    // @todo: Go to inactive state before check
-    cy.get(testSelectors.states.inactive).contains(testProps.inactive); // Check
-
-    // Act: Next state
-    cy.get(testSelectors.events.CLICK).click();
-
-    // Assert
-    cy.get(testSelectors.states.active).contains(testProps.active); // Check
-  });
-
-  it("renders 'inactive' screen When 'active' and 'CLICK'", () => {
-    // Arrange:
-    cy.get(testSelectors.events.CLICK).click();
-    cy.get(testSelectors.states.active).contains(testProps.active); // Check
-
-    // Act: Next state
-    cy.get(testSelectors.events.CLICK).click();
-
-    // Assert
-    cy.get(testSelectors.states.inactive).contains(testProps.inactive); // Check
-  });
-
-  it("renders 'closed' screen When 'active' and 'CLOSE'", () => {
-    // Arrange:
-    cy.get(testSelectors.events.CLICK).click();
-    cy.get(testSelectors.states.active).contains(testProps.active); // Check
-
-    // Act: Next state
-    cy.get(testSelectors.events.CLOSE).click();
-
-    // Assert
-    cy.get(testSelectors.states.closed).contains(testProps.closed); // Check
-  });
-
-  it("renders 'active' screen When 'closed' and 'OPEN'", () => {
-    // Arrange: starts inactive
-    cy.get(testSelectors.events.CLICK).click();
-    cy.get(testSelectors.events.CLOSE).click();
-    cy.get(testSelectors.states.closed).contains(testProps.closed); // Check
-
-    // Act: Next state
-    cy.get(testSelectors.events.OPEN).click();
-
-    // Assert
-    cy.get(testSelectors.states.active).contains(testProps.active); // Check
+  describe("Coverage", () => {
+    it("should have full coverage", () => {
+      return testModel.testCoverage();
+    });
   });
 });
