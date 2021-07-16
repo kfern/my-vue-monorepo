@@ -2,75 +2,66 @@
 to: src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.spec.js
 sh: cd <%= cwd %> && yarn lint src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.spec.js
 ---
+import { getTestsModels } from "../lib/test-utils";
 import { mount } from "@cypress/vue";
 import <%= h.changeCase.pascalCase(name) %> from "@/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.vue";
+import machineJSON from "@/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.machine.json";
+
+const now = new Date().toLocaleString();
+
+const testProps = {
+  <% for(const state of statesNames) {%><%= state %>: "Text when <%= state %> " + now,<% } %>
+};
 
 const testSelectors = {
   states: {<% for(const state of statesNames) {%> 
-    <%= state %>: ".<%= state %>-screen",<% } %>
+    <%= state %>: {
+      class: ".<%= state %>-screen", value: testProps.<%= state %>
+    },<% } %>
   },
   events: {<% for(const event of eventsNames) {%>
     <%= event %>: ".<%= h.changeCase.lower(event) %>-button",<% } %>
   }
 };
 
-/*
-import machine from "@/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.machine.json";
-import { getTestsModels } from "../lib/test-utils";
+const triggerEvents = {<% for(const event of eventsNames) {%>
+  <%= event %>: {
+    exec: ({ cy, selectors }) => {
+      cy.get(selectors.events.<%= event %>).click();
+    },
+  },<% } %>
+}
 
-const checkState = {
-  <% for(const state of statesNames) {%><%= state %>: (cy) => {
-    cy.get(testSelectors.states.<%= state %>);
+const checkState = {<% for(const state of statesNames) {%>
+  <%= state %>: ({ cy, selectors }) => {
+    cy.get(selectors.states.<%= state %>.class).contains(
+      selectors.states.<%= state %>.value
+    );
   },<% } %>
 };
 
-const triggerEvents = {
-  <% for(const event of eventsNames) {%><%= h.changeCase.lower(event) %>: (cy) => {
-    cy.get(testSelectors.events.<%= event %>).click();
-  },<% } %>
-};
+const testModel = getTestsModels(machineJSON, checkState, triggerEvents);
 
-const testModel = getTestsModels(machine, checkState, triggerEvents);
-const testPlans = testModel.getSimplePathPlans(); // getShortestPathPlans();
-*/
+describe("<%= h.changeCase.pascalCase(name) %>", () => {
+  const testPlans = testModel.getShortestPathPlans();
 
-describe("<%= h.changeCase.pascalCase(name) %>.vue", () => {
-
-  const testProps = {
-    <% for(const state of statesNames) {%><%= state %>: "Text when <%= state %>",<% } %>
-  };
-
-  beforeEach(() => {
-    // Arrange
-    mount(<%= h.changeCase.pascalCase(name) %>, {
-      props: testProps,
+  testPlans.forEach((plan) => {
+    describe(plan.description, () => {
+      plan.paths.forEach((path) => {
+        it(path.description, () => {
+          // do any setup, then...
+          mount(<%= h.changeCase.pascalCase(name) %>, {
+            props: testProps,
+          });
+          cy.waitUntil(() => path.test({ cy, selectors: testSelectors }));
+        });
+      });
     });
   });
 
-  it("renders <%= statesNames[0] %> screen by default", () => {
-
-    // Act: Nothing
-
-    // Assert
-    cy.get(testSelectors.states.<%= statesNames[0] %>).contains(testProps.<%= statesNames[0] %>);
+  describe("Coverage", () => {
+    it("should have full coverage", () => {
+      return testModel.testCoverage();
+    });
   });
-
-  <% for(const n of transitions) {%>
-    <% for(const t of n.events) {%>
-  it("renders '<%= t.target %>' screen When '<%= t.state %>' and '<%= t.event %>'", () => {
-    // Arrange: 
-    // @todo: Go to <%= t.state %> state before check
-    cy.get(testSelectors.states.<%= t.state %>).contains(testProps.<%= t.state %>); // Check
-
-    // Act: Next state
-    cy.get(testSelectors.events.<%= t.event %>).click();
-
-    // Assert
-    cy.get(testSelectors.states.<%= t.target %>).contains(testProps.<%= t.target %>); // Check
-  });
-
-    <% } %>        
-  <% } %>
-
-
 });
