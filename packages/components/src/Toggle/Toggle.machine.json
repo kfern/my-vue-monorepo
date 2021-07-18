@@ -1,5 +1,5 @@
 {
-	"id": "toggleMachine",
+	"id": "toggle-machine",
 	"initial": "inactive",
 	"context": {},
 	"states": {
