@@ -2,7 +2,7 @@
 to: src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.cy.js
 sh: cd <%= cwd %> && yarn lint src/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.cy.js
 ---
-import { getTestsModels } from "../lib/test-utils";
+import { getTestsModels } from "/tests/lib/test-utils";
 import { mount } from "@cypress/vue";
 import <%= h.changeCase.pascalCase(name) %> from "@/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.vue";
 import machineJSON from "@/<%= h.changeCase.pascalCase(name) %>/<%= h.changeCase.pascalCase(name) %>.machine.json";

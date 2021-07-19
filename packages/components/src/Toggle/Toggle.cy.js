@@ -1,4 +1,4 @@
-import { getTestsModels } from "../lib/test-utils";
+import { getTestsModels } from "/tests/lib/test-utils";
 import { mount } from "@cypress/vue";
 import Toggle from "@/Toggle/Toggle.vue";
 import machineJSON from "@/Toggle/Toggle.machine.json";

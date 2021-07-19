@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "npm run lint && cypress run-ct",
+    "test:unit": "npm run lint && cypress run-ct && npm run test:jest",
+    "test:jest": "vue-cli-service test:unit",
     "test:interactive": "cypress open-ct",
     "lint": "vue-cli-service lint",
     "new": "HYGEN_OVERWRITE=1 hygen base new"
