@@ -83,7 +83,7 @@ const getInputs = async (inquirer, args) => {
     statesNames: general.states,
     eventsNames
   };
-  console.log(JSON.stringify(result, null, 2))
+  // console.log(JSON.stringify(result, null, 2))
   return result;
 }
 
