@@ -10,11 +10,12 @@
     "test:jest": "vue-cli-service test:unit",
     "test:interactive": "cypress open-ct",
     "lint": "vue-cli-service lint",
-    "new": "HYGEN_OVERWRITE=1 hygen base new"
+    "new": "cross-env HYGEN_OVERWRITE=1 hygen base new"
   },
   "dependencies": {
     "@xstate/vue": "^0.5.0",
     "core-js": "^3.6.5",
+    "cross-env": "^7.0.3",
     "html-webpack-plugin": "^4.5.2",
     "vue": "^3.0.0"
   },
