@@ -1,4 +1,5 @@
 const assert = require("assert");
+
 const {
   getGeneralQuestions,
   getEventsQuestions,
@@ -219,44 +220,5 @@ describe("inputs.utils", () => {
 
     assert.deepStrictEqual(actual, expected, "transitions");
   });
+
 });
-
-/*
-const { getGeneral, getEvents, getTargets } = require("../../lib/inputs.utils");
-
-describe("prompt inputs", () => {
-  it.skip("WIP. getTargets: Target by state and event", async () => {
-    // Arrange
-    const enquirer = new Enquirer({ show: false });
-    const beforeAct = {
-      states: {
-        inactive: { on: ["CLICK"] },
-        active: { on: ["CLICK", "CLOSE"] },
-        closed: { on: ["OPEN"] },
-      },
-    };
-    const fakeData = {
-      states: {
-        inactive: { on: { CLICK: { target: "active" } } },
-        active: {
-          on: { CLICK: { target: "inactive" }, CLOSE: { target: "closed" } },
-        },
-        closed: { on: { OPEN: { target: "active" } } },
-      },
-    };
-
-    enquirer.on("prompt", (prompt) => {
-      console.log("prompt", prompt.name);
-      prompt.value = lodash.get(fakeData.states, prompt.name);
-      console.log("input(name, value)", prompt.name, prompt.value);
-      prompt.submit();
-    });
-
-    // Act
-    const actual = await getTargets(enquirer, beforeAct.states);
-
-    // Assert
-    assert.deepStrictEqual(actual.states, fakeData.states);
-  });
-});
-*/
