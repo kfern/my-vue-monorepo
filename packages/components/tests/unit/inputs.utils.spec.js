@@ -220,5 +220,4 @@ describe("inputs.utils", () => {
 
     assert.deepStrictEqual(actual, expected, "transitions");
   });
-
 });
