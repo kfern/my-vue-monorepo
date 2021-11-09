@@ -1,5 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
+  <!-- <HelloWorld msg="Welcome to Vue 3 + TypeScript + Danfo.js" /> -->
   <HelloDanfo msg="Welcome to Vue 3 + TypeScript + Danfo.js">
     <ul>
       <li>
@@ -14,11 +15,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import HelloDanfo from "./components/HelloDanfo.vue";
+// import { HelloWorld } from "@kfern/components";
 
 export default defineComponent({
   name: "App",
   components: {
     HelloDanfo,
+    // HelloWorld,
   },
 });
 </script>
