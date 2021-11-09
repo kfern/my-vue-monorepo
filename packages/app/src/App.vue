@@ -1,17 +1,26 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <HelloDanfo msg="Welcome to Vue 3 + TypeScript + Danfo.js">
+    <ul>
+      <li>
+        <a href="https://danfo.jsdata.org/" target="_BLANK"
+          >Danfo.js Documentation</a
+        >
+      </li>
+    </ul>
+  </HelloDanfo>
 </template>
 
-<script>
-import { HelloWorld } from "@kfern/components";
+<script lang="ts">
+import { defineComponent } from "vue";
+import HelloDanfo from "./components/HelloDanfo.vue";
 
-export default {
+export default defineComponent({
   name: "App",
   components: {
-    HelloWorld,
+    HelloDanfo,
   },
-};
+});
 </script>
 
 <style>
@@ -21,6 +30,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
+  width: 90%;
 }
 </style>

@@ -1,6 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`App.vue is stable 1`] = `
-<img alt="Vue logo" src="">
-<hello-world-stub msg="Welcome to Your Vue.js App"></hello-world-stub>
-`;
