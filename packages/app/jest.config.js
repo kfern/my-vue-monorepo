@@ -3,4 +3,7 @@ module.exports = {
   transform: {
     "^.+\\.vue$": "vue-jest",
   },
+  setupFiles: [
+    "./tests/setupPlotly.js"
+  ]
 };
