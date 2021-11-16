@@ -1,5 +1,5 @@
 {
-  "name": "@kfern/components",
+  "name": "@kfern/components_js",
   "version": "0.1.0",
   "private": true,
   "main": "src/main.js",

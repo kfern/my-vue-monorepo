@@ -1,7 +1,7 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <!-- <HelloWorld msg="Welcome to Vue 3 + TypeScript + Danfo.js" /> -->
-  <HelloDanfo msg="Welcome to Vue 3 + TypeScript + Danfo.js">
+  <HelloWorld msg="Welcome to Vue 3 + TypeScript + Danfo.js" />
+  <HelloDanfo>
     <ul>
       <li>
         <a href="https://danfo.jsdata.org/" target="_BLANK"
@@ -15,13 +15,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import HelloDanfo from "./components/HelloDanfo.vue";
-// import { HelloWorld } from "@kfern/components";
+import { HelloWorld } from "@kfern/my_components";
 
 export default defineComponent({
   name: "App",
   components: {
     HelloDanfo,
-    // HelloWorld,
+    HelloWorld,
   },
 });
 </script>

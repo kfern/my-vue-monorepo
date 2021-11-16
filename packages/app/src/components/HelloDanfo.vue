@@ -1,7 +1,4 @@
 <template>
-  <div class="HelloDanfo">
-    <h3>{{ msg }}</h3>
-  </div>
   <slot />
   <div ref="divPlot" class="divPlot"></div>
 </template>
@@ -22,12 +19,6 @@ const layout = {
 
 export default defineComponent({
   name: "HelloDanfo",
-  props: {
-    msg: {
-      type: String,
-      required: false,
-    },
-  },
 
   setup(/*props*/) {
     const divPlot = ref("");

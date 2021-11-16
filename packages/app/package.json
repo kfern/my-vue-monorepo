@@ -2,7 +2,7 @@
   "name": "@kfern/app",
   "version": "0.1.0",
   "private": false,
-  "types": "types/index.d.ts",
+  "types": "src/types/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
